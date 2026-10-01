@@ -1,10 +1,10 @@
-name: Build Sendly APK
+name: Build Sendly 1.0.0 APK
 
 on:
   workflow_dispatch:
   push:
     paths:
-      - 'Sendly-v0.5.0-beta1-source.zip'
+      - 'Sendly-v1.0.0-source.zip'
       - '.github/workflows/build-sendly.yml'
 
 permissions:
@@ -23,7 +23,7 @@ jobs:
         run: |
           rm -rf build-src
           mkdir -p build-src
-          unzip -q Sendly-v0.5.0-beta1-source.zip -d build-src
+          unzip -q Sendly-v1.0.0-source.zip -d build-src
           test -f build-src/Sendly/gradlew
 
       - name: Set up JDK 17
@@ -46,23 +46,23 @@ jobs:
           yes | sdkmanager --licenses >/dev/null || true
           sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
 
-      - name: Build installable debug APK
+      - name: Build installable Sendly APK
         working-directory: build-src/Sendly
         run: |
           chmod +x gradlew
           ./gradlew --no-daemon clean assembleDebug --stacktrace
 
-      - name: Prepare APK
+      - name: Prepare Sendly 1.0.0 APK
         run: |
-          cp build-src/Sendly/app/build/outputs/apk/debug/app-debug.apk Sendly-v0.5.0-beta1.apk
-          sha256sum Sendly-v0.5.0-beta1.apk > Sendly-v0.5.0-beta1.sha256
+          cp build-src/Sendly/app/build/outputs/apk/debug/app-debug.apk Sendly-v1.0.0.apk
+          sha256sum Sendly-v1.0.0.apk > Sendly-v1.0.0.sha256
 
-      - name: Upload APK
+      - name: Upload Sendly 1.0.0
         uses: actions/upload-artifact@v7
         with:
-          name: Sendly-v0.5.0-beta1
+          name: Sendly-v1.0.0
           path: |
-            Sendly-v0.5.0-beta1.apk
-            Sendly-v0.5.0-beta1.sha256
+            Sendly-v1.0.0.apk
+            Sendly-v1.0.0.sha256
           if-no-files-found: error
           retention-days: 30

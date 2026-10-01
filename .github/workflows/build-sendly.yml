@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'Sendly-v0.1.0-beta1-source.zip'
+      - 'Sendly-v0.3.0-beta1-source.zip'
       - '.github/workflows/build-sendly.yml'
 
 permissions:
@@ -23,7 +23,7 @@ jobs:
         run: |
           rm -rf build-src
           mkdir -p build-src
-          unzip -q Sendly-v0.1.0-beta1-source.zip -d build-src
+          unzip -q Sendly-v0.3.0-beta1-source.zip -d build-src
           test -f build-src/Sendly/gradlew
 
       - name: Set up JDK 17
@@ -54,15 +54,15 @@ jobs:
 
       - name: Prepare APK
         run: |
-          cp build-src/Sendly/app/build/outputs/apk/debug/app-debug.apk Sendly-v0.1.0-beta1.apk
-          sha256sum Sendly-v0.1.0-beta1.apk > Sendly-v0.1.0-beta1.sha256
+          cp build-src/Sendly/app/build/outputs/apk/debug/app-debug.apk Sendly-v0.3.0-beta1.apk
+          sha256sum Sendly-v0.3.0-beta1.apk > Sendly-v0.3.0-beta1.sha256
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: Sendly-v0.1.0-beta1
+          name: Sendly-v0.3.0-beta1
           path: |
-            Sendly-v0.1.0-beta1.apk
-            Sendly-v0.1.0-beta1.sha256
+            Sendly-v0.3.0-beta1.apk
+            Sendly-v0.3.0-beta1.sha256
           if-no-files-found: error
           retention-days: 30
